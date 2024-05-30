@@ -1,0 +1,19 @@
+:root{
+  --one : #85A26A;
+  --two : white;
+  --three : rgb(32, 33, 36);
+  --four : white;
+  --gray : #606261;
+  --borderColor : rgba(127, 127, 127, 0.493);
+  --hoverColor : #d3d4d5;
+  --borderB5 : #dee2e6;
+}
+button {
+  border:none
+}
+.close:hover{
+  cursor: pointer;
+}
+p,h1,h2,h3,h4,h5,h6{
+  margin-bottom: 0px !important;
+}
