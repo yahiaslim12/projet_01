@@ -12,7 +12,8 @@ export const link = {
 export const colors = {
     gray_p : "#606261",
     primary : "#85A26A",
-    black : "#202124"
+    black : "#202124",
+    gray_small : '#5c6c75bf'
 }
 export const pallet = {
     one : '#47A992',

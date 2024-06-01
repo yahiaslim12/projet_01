@@ -1,0 +1,56 @@
+/*pub card*/
+.pub {
+    width: 300px !important;
+    height: 450px;
+    flex-shrink: 0; 
+    margin-right: 10px; 
+    scroll-snap-align: start;
+    position: relative;
+}
+
+.pub img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pub > div {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+}
+/* daily card */
+.daily{
+    width: 300px !important;
+    height: 450px;
+    flex-shrink: 0; 
+    margin-right: 10px; 
+    scroll-snap-align: start;
+    position: relative;
+}
+.daily img{
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+}
+.daily div{
+    height: 50%;
+}
+/*ecard*/
+.ecard{
+    width: 300px !important;
+}
+.ecard img{
+    width: 100%;
+    height: 50%;
+}
+@media screen and (max-width:950px) {
+    .pub , .daily{
+        width: 280px;
+    }
+}
+@media screen and (max-width:500px) {
+    .pub , .daily{
+        width: 100%;
+    }
+}

@@ -8,6 +8,10 @@
   --hoverColor : #d3d4d5;
   --borderB5 : #dee2e6;
 }
+body{
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
 button {
   border:none
 }
