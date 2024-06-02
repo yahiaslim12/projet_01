@@ -10,8 +10,8 @@ export default function Home() {
     <main>
        <Couv/>
        <Init_Pro/>
-       <About/>
        <Cat/>
+       <About/>
        <End/>
     </main>
   )
