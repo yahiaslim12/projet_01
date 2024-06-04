@@ -1,0 +1,45 @@
+.cards{
+    width: 65%;
+}
+.payment{
+    width: 35%;
+}
+.bag_main{
+    gap: 2rem;
+}
+.cards_modal{
+    width: 600px;
+    height: auto;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    padding: 1rem 2rem;
+    border-radius: 10px;
+}
+.table_detail :where(h6,span){
+    width: calc(100%/3);
+    font-size: 14px;
+}
+
+@media screen and (max-width:500px){
+    .cards_modal{
+        width: 100%;
+        height: 100%;
+        border-radius: 0px;
+    }
+}
+@media screen and (max-width:576px) {
+    .cards h6{
+        font-size: small;
+    }
+}
+@media screen and (max-width:992px) {
+     .bag_main{
+        flex-wrap: wrap;
+     }
+     .cards,.payment{
+        width: 100%;
+     }
+}
