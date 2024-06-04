@@ -1,0 +1,131 @@
+.main-container {
+    padding: 1% 6%;
+}
+.greenH{
+  color :#85a26a ; 
+}
+.greenH:hover{
+  color: green;
+}
+.option-selector {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.option {
+  padding: 0.3rem 1.7rem;
+  border: 2px solid #ccc;
+  border-radius: 50px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.no-option{
+  padding: 0.3rem 1.7rem;
+  border: 2px solid #ccc;
+  border-radius: 50px;
+  text-align: center;
+  color: #ccc;
+}
+.option.selected {
+  background-color: #85a26a;
+  color: white;
+  border-color: #85a26a;
+}
+.no-option.selected {
+  color: #85a26a;
+  border-color: #85a26a;
+}
+.option:hover {
+  background-color: #e7e7e7;
+  color: black;
+  border-color: #85a26a;
+}
+.input-special-prod{
+  outline: 0.5px solid #85a26a;
+}
+.input-special-prod:focus{
+  outline: 6px solid #85a26a;
+}
+.quantity-text {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.quantity-button {
+  padding: 0.3rem 1.2rem;
+  border: 2px solid #85a26a;
+  border-radius: 50px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s, border-color 0.3s;
+  user-select: none;
+}
+.quantity-button:hover {
+  background-color: #85a26a;
+  color: #ffffff;
+}
+.quantity-display {
+  padding: 0.3rem 2.7rem;
+  border: 2px solid #85a26a;
+  border-radius: 50px;
+  text-align: center;
+}
+
+.price-and-add-to-cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #85a26a;
+  border-radius: 50px;
+  margin-top: 1rem;
+  max-width: 400px;
+}
+
+.price {
+  flex: 1;
+  font-size: 1.2rem;
+}
+
+.add-to-cart {
+  flex: 1;
+  background-color: #85a26a;
+  padding: 0.4rem 1rem;
+  color: white;
+  border-radius: 50px;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  user-select: none;
+}
+
+.add-to-cart:hover {
+  background-color: #000000;
+}
+
+.row {
+  margin-bottom: 1rem;
+}
+.container-section {
+  padding: 3% 0 ;
+  padding-bottom: 0 !important;
+  margin: 20px auto; 
+  margin-top:  0 !important;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #000000; 
+  margin-bottom: 10px; 
+}
+
+.section-divider {
+  border: 1px solid rgb(133, 162, 106);
+  margin: 0 auto; 
+  width: 100%; 
+}

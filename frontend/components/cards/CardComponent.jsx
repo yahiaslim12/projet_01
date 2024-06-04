@@ -25,7 +25,7 @@ const CardComponent = () => {
             750 DA
         </Card.Text>
         <div style={{ border: '1px solid black' }} />
-        <Card.Text className='fw-light text-secondary info-lg info-md' style={{color:"#14c2f7" , fontSize : "0.75rem" }}>
+        <Card.Text className='fw-light text-secondary info-lg info-md' style={{ fontSize : "0.75rem" }}>
             Cookie sablé fourré à la pâte à tartiner. Tout juste sorti du four.
         </Card.Text>
       </Card.Body>
