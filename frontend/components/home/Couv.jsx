@@ -13,7 +13,7 @@ export default function Couv() {
                 </span>
             </h1>
              <p style={{marginBottom : '0px'}} className="mt-3">
-             Discover a variety of pastries made with premium ingredients and love. Your journey to better health begins with every delicious choice you make.
+            mium ingredients and love. Your journey to better health begins with every delicious choice you make.
              </p>
          </div>
          <div className='part_two d-flex justify-content-center align-items-center'>
