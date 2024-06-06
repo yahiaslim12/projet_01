@@ -20,7 +20,7 @@ export default function Drawer_content({drawer}) {
     {
       value: "Bag",
       focus: false,
-      url: "/bag",
+      url: "/cart",
     },
     {
       value: "About us",
