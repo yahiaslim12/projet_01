@@ -15,12 +15,12 @@ export default function Drawer_content({drawer}) {
     {
       value: "Category",
       focus: false,
-      url: "/Category",
+      url: "#categories",
     },
     {
       value: "Bag",
       focus: false,
-      url: "/",
+      url: "/bag",
     },
     {
       value: "About us",

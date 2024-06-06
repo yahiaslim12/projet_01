@@ -64,7 +64,7 @@ export default function Header() {
                 <ul style={ul} className="d-flex gap-4 align-items-center">
                     <li style={{color : colors.primary}}><Link href={'./'} style={link}>Home</Link></li>
                     <li><Link href={'#category'} style={link}>Category</Link></li>
-                    <li><Link href={'./Bag'} style={link}>Bag</Link></li>
+                    <li><Link href={'./bag'} style={link}>Bag</Link></li>
                     <li><Link href={'#about'} style={link}>About us</Link></li>
                 </ul>
             </nav>
