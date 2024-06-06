@@ -1,3 +1,4 @@
+'use client'
 import { Right } from "../../svg/bag";
 import { useRouter } from "next/navigation";
 

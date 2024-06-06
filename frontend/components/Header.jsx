@@ -7,11 +7,20 @@ import { useEffect, useState } from "react"
 import SearchModal from "./SearchModal"
 import { colors } from "../styles/ele"
 import Drawer_content from "./Drawer_content"
+import axios from "axios"
 export default function Header() {
   const [open,setOpen] = useState(false);
   const [drawer,setDrawer] = useState(false)
   const [openL,setOpenL] = useState(false)
   const [change,setChange] = useState(false)
+  const [values,setValues] = useState({
+     firstname : '',
+     lastname : '',
+     age : "",
+     weight : "",
+     email : "",
+     password : ""
+  })
   const handleOpen = ()=>{
       setOpen(false)
   }
@@ -24,6 +33,28 @@ export default function Header() {
   }
   const handleCloseLoginModal = ()=>{
     setOpenL(false)
+  }
+  const handleValues = (e) => {
+    setValues(prev => ({
+        ...prev,
+        [e.target.name] : e.target.value
+    }))
+  }
+  const createAccount = (e) => {
+     e.preventDefault()
+     axios({
+        url : 'http://localhost:8000/api/createAccount',
+        method : 'post',
+        data : values,
+        withCredentials : true,
+        headers: {
+            'Accept': 'application/json'
+        }
+     }).then((res)=>{
+         console.log(res)
+     }).catch((err)=>{
+         console.log(err)
+     })
   }
   return (
     <header className='border'>
@@ -72,7 +103,7 @@ export default function Header() {
                                     className="form-control"
                                     id="floatingInput"
                                     placeholder="name@example.com"
-            
+                                    val
                                 />
                                 <label htmlFor="floatingInput">Email address</label>
                         </div>
@@ -93,23 +124,25 @@ export default function Header() {
                           <div className="d-flex gap-3 flex-wrap flex-sm-nowrap">
                             <div className="input-floating-label form-floating mb-4 w-100 w-sm-50">
                                     <input
-                                        type="email"
-                                        name="email"
+                                        type="text"
+                                        name="firstname"
                                         className="form-control"
                                         id="floatingInput"
-                                        placeholder="name@example.com"
-                
+                                        placeholder="firstname"
+                                        value={values.firstname}
+                                        onChange={(e)=>handleValues(e)}
                                     />
                                     <label htmlFor="floatingInput">FirstName</label>
                             </div>
                             <div className="input-floating-label form-floating mb-4 w-100 w-sm-50">
                                     <input
-                                        type="email"
-                                        name="email"
+                                        type="text"
+                                        name="lastname"
                                         className="form-control"
                                         id="floatingInput"
-                                        placeholder="name@example.com"
-                
+                                        placeholder="lastname"
+                                        value={values.lastname}
+                                        onChange={(e)=>handleValues(e)}
                                     />
                                     <label htmlFor="floatingInput">LastName</label>
                             </div>
@@ -117,23 +150,25 @@ export default function Header() {
                             <div className="d-flex gap-3">
                                 <div className="input-floating-label form-floating mb-4">
                                 <input
-                                    type="email"
-                                    name="email"
+                                    type="text"
+                                    name="age"
                                     className="form-control"
                                     id="floatingInput"
                                     placeholder="22"
-            
+                                    value={values.age}
+                                    onChange={(e)=>handleValues(e)}
                                 />
                                 <label htmlFor="floatingInput">Age</label>
                              </div>
                              <div className="input-floating-label form-floating mb-4">
                                 <input
-                                    type="email"
-                                    name="email"
+                                    type="text"
+                                    name="weight"
                                     className="form-control"
                                     id="floatingInput"
-                                    placeholder="name@example.com"
-            
+                                    placeholder="weight"
+                                    value={values.weight}
+                                    onChange={(e)=>handleValues(e)}
                                 />
                                 <label htmlFor="floatingInput">Weight</label>
                                 </div>
@@ -145,18 +180,20 @@ export default function Header() {
                                     className="form-control"
                                     id="floatingInput"
                                     placeholder="name@example.com"
-            
+                                    value={values.email}
+                                    onChange={(e)=>handleValues(e)}
                                 />
                                 <label htmlFor="floatingInput">Email</label>
                                 </div>
                             <div className="input-floating-label form-floating mb-4">
                                 <input
-                                    type="email"
-                                    name="email"
+                                    type="password"
+                                    name="password"
                                     className="form-control"
                                     id="floatingInput"
                                     placeholder="name@example.com"
-            
+                                    value={values.password}
+                                    onChange={(e)=>handleValues(e)}
                                 />
                                 <label htmlFor="floatingInput">Password</label>
                             </div>
@@ -165,7 +202,7 @@ export default function Header() {
 
                     )
                     }
-                    <button className="btn btn-dark text-light">{!change ? "Connect" : "Create"}</button>
+                    <button className="btn btn-dark text-light" onClick={(e)=> change ? createAccount(e) : ""}>{!change ? "Connect" : "Create"}</button>
                     <small className="text-center">
                         {!change ? "if you don't have account " : "if you have account "}
                          <button onClick={(e)=>handleChange(e)} style={{color : colors.primary,backgroundColor : 'white',border : 'none'}}>{!change ? 'Create Account':'Login'}</button></small>
