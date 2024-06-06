@@ -3,21 +3,17 @@
   "builds": [
     {
       "src": "frontend/next.config.js",
-      "use": "@vercel/next"
-    },
-    {
-      "src": "backend/server.py",
-      "use": "@vercel/python"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/server.py"
+      "dest": "backend/server.py"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/$1"
+      "dest": "frontend/$1"
     }
   ]
 }
