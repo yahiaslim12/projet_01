@@ -15,7 +15,7 @@ export default function Drawer_content({drawer}) {
     {
       value: "Category",
       focus: false,
-      url: "#categories",
+      url: "/categories",
     },
     {
       value: "Bag",
@@ -25,7 +25,7 @@ export default function Drawer_content({drawer}) {
     {
       value: "About us",
       focus: false,
-      url: "/",
+      url: "#about",
     },
   ]);
   return (
