@@ -22,3 +22,16 @@ button {
 p,h1,h2,h3,h4,h5,h6{
   margin-bottom: 0px !important;
 }
+.my_alert{
+   width: 300px;
+   position: absolute;
+   bottom: 1rem;
+   left: 1rem;
+   background-color: #85a26a;
+   color: white;
+}
+@media screen and (max-width : 500px){
+   .my_alert{
+      width: 100%;
+   }
+}

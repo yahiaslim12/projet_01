@@ -1,5 +1,5 @@
 'use client'
-import { Modal ,Box, Drawer} from "@mui/material"
+import { Modal ,Box, Drawer,Alert} from "@mui/material"
 import { ul ,button, link, pallet} from "../styles/ele"
 import {Bag,Close,List,Person, Search} from "../svg/bag"
 import Link from "next/link"
@@ -8,6 +8,9 @@ import SearchModal from "./SearchModal"
 import { colors } from "../styles/ele"
 import Drawer_content from "./Drawer_content"
 import axios from "axios"
+import { create } from "@/app/api/createAccount"
+import { useRouter } from "next/navigation"
+
 export default function Header() {
   const [open,setOpen] = useState(false);
   const [drawer,setDrawer] = useState(false)
@@ -21,6 +24,12 @@ export default function Header() {
      email : "",
      password : ""
   })
+  const [my_alert,setMy_alert] = useState({
+    open : false,
+    msg : '',
+    backgroundColor: "",
+  })
+  const router = useRouter()
   const handleOpen = ()=>{
       setOpen(false)
   }
@@ -40,22 +49,41 @@ export default function Header() {
         [e.target.name] : e.target.value
     }))
   }
-  const createAccount = (e) => {
+  const createAccount = async(e) => {
      e.preventDefault()
-     axios({
-        url : 'http://localhost:8000/api/createAccount',
-        method : 'post',
-        data : values,
-        withCredentials : true,
-        headers: {
-            'Accept': 'application/json'
-        }
-     }).then((res)=>{
-         console.log(res)
-     }).catch((err)=>{
-         console.log(err)
-     })
+     const res = await create(values)
+     if(res && res.command) {
+        console.log(res.command);
+        setOpenL(false)
+        router.push('./')
+        setMy_alert(prev => ({
+            open : true,
+            msg : 'Account Created Succussfuly'
+        }))
+        setTimeout(()=>{
+            setMy_alert(prev =>({
+                ...prev,
+                open : false,
+                backgroundColor : "#85a26a"
+            }))
+        },4000)
+     }else{
+        setMy_alert(prev => ({
+            open : true,
+            msg : 'Creation failed',
+            backgroundColor : "red"
+        }))
+        setTimeout(()=>{
+            setMy_alert(prev =>({
+                ...prev,
+                open : false,
+            }))
+        },4000)
+     }
   }
+  useEffect(()=>{
+    console.log(values);
+  },[values])
   return (
     <header className='border'>
         <div className='headerContainer container d-flex justify-content-between align-items-center'>
@@ -209,6 +237,13 @@ export default function Header() {
                 </form>
             </Box>
         </Modal>
+        {
+            my_alert.open && (
+                <Alert variant="filled" className="my_alert" style={{backgroundColor : my_alert.backgroundColor}}>
+                    {my_alert.msg}
+                </Alert>
+            )
+        }
     </header>
   )
 }
