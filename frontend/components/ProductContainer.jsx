@@ -46,7 +46,7 @@ export default function ProductContainer() {
 
   return (
     
-    <div className="main-container ">
+    <div className="main-container-prod ">
         <p className='d-flex gap-2'>
           <span style={{color: "#85a26a"}}>Home</span>
           <span className='text-secondary'>/</span>

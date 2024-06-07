@@ -30,7 +30,7 @@ export default function Couv() {
             <Col className="text-center" style={{ marginTop:"-3.3vh" }}>
               <CamionRond/>
               <h3 className="section-title" style={{borderRight:"1px solid #85a26a" }}>FAST SHIPPING</h3>
-              <p className="section-description" style={{borderRight:"1px solid #85a26a" }}>In less than 10 Hours </p>
+              <p className="section-description" style={{borderRight:"1px solid #85a26a" }}>In less than 24 Hours </p>
             </Col>
             <Col className="text-center" style={{marginTop :"-4.6vh"}}>
               <SupportRond />

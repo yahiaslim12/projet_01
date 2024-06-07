@@ -111,6 +111,7 @@ ul ul li:hover{
   color: #85a26a;
 }
 .input-search-cat{
+  width: 100%;
   outline: 0.5px solid #85a26a;
 }
 .input-search-cat:focus{
@@ -129,11 +130,11 @@ ul ul li:hover{
   align-self: center;
   justify-content: center;
 }
-.content {
+.content-cat {
     width: 80%;
 }
 @media (max-width: 768px) {
-    .content {
+    .content-cat {
         width: 100vw !important;
       }
 }
