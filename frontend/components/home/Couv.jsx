@@ -18,7 +18,7 @@ export default function Couv() {
          </div>
          <div className='part_two d-flex justify-content-center align-items-center'>
              <div className="div_img">
-                <img src={'./photos/pastry_shop.jpg'} className="rounded" alt="" />
+                <img src={'./photos/pastry_shop.jpg'} className="rounded" alt=""/>
                 <div className="glass w-50 rounded px-2 py-1 border">
                     <Rating value={5} readOnly/>
                     <p style={{marginBottom : '0px'}}>Choose your healthy pastry for good healthy</p>
