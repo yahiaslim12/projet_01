@@ -91,7 +91,7 @@ export default function Header() {
             <nav className="d-md-block d-none">
                 <ul style={ul} className="d-flex gap-4 align-items-center">
                     <li style={{color : colors.primary}}><Link href={'./'} style={link}>Home</Link></li>
-                    <li><Link href={'#category'} style={link}>Category</Link></li>
+                    <li><Link href={'/categories'} style={link}>Category</Link></li>
                     <li><Link href={'./cart'} style={link}>Bag</Link></li>
                     <li><Link href={'#about'} style={link}>About us</Link></li>
                 </ul>
