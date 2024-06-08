@@ -37,16 +37,21 @@
     height: 50%;
 }
 /*ecard*/
-.ecard{
-    width: 300px !important;
+.ecard {
+    width: 300px;
+    height: 400px;
 }
-.ecard img{
+
+.ecard .one div{
     width: 100%;
-    height: 65%;
+
 }
-.ecard div{
-    height: 35%;
+.ecard .one div img{
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
 }
+
 @media screen and (max-width:950px) {
     .pub , .daily{
         width: 280px;
@@ -54,20 +59,24 @@
 }
 @media screen and (max-width : 768px){
     .ecard{
-        width: 150px !important;
+        width: 150px;
+        height: 250px;
     }
-    .ecard img{
-        width: 100%;
-        height: 50%;
+    .ecard p{
+        word-break: keep-all;
+        font-size: 10px;
+    }
+    .ecard h6{
+        font-size: 10px;
+    }
+    .ecard .one div img{
+         height: 100px;
     }
     .ecard small{
         font-size: 10px;
     }
-    .ecard :where(h6,p){
-        font-size: 14px;
-    }
-    .ecard div {
-        height: 50%;
+    .ecard button{
+        height: 35px;
     }
 }
 @media screen and (max-width:500px) {

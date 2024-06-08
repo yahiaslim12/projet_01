@@ -1,33 +1,20 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Daily from "../cards/daily";
 import Pub from "../cards/pub";
+import { GET_DAILY } from "@/app/api/products";
 
 
 export default function Init_Pro() {
-  const [cards,setCards] = useState([
-    {
-        id:1,
-        title : 'Madlan Vany',
-        desc : 'Our Madlan chocolat is crafted to be the perfect balance of taste and health.',
-        price : 1500,
-        src : './photos/products/madlan.png'
-    },
-    {
-        id:2,
-        title : 'Madlan Vany',
-        desc : 'Our Madlan chocolat is crafted to be the perfect balance of taste and health.',
-        price : 1500,
-        src : "./photos/products/mad2.jpg"
-    },
-    {
-        id:3,
-        title : 'Madlan Vany',
-        desc : 'Our Madlan chocolat is crafted to be the perfect balance of taste and health.',
-        price : 1500,
-        src : "./photos/products/madlan.png"
-    }
-  ])
+  const [cards,setCards] = useState([])
+  const GET = async() => {
+
+    const res = await GET_DAILY([1,3,9])
+    setCards(res)
+  }
+   useEffect(()=>{
+     GET()
+  },[])
   return (
     <section className="init_pro container mt-5">
         <div className="title">
@@ -36,7 +23,7 @@ export default function Init_Pro() {
         <div className="cards d-flex gap-2 mt-3">
             <Pub/>
             {cards.map((item)=>(
-                <Daily key={item.id} desc={item.desc} title={item.title} price={item.price} src={item.src} />
+                <Daily key={item.id_product} words={item.words} desc={item.s_desc} title={item.name} price={item.price} src={item.img} />
             ))}
         </div>
     </section>

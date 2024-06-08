@@ -1,28 +1,30 @@
 import { colors } from "../../styles/ele";
-import { List } from "../../svg/bag";
+import { Add, List } from "../../svg/bag";
 
-export default function Daily({src,price,desc,title}) {
+export default function Daily({src,price,desc,title,words}) {
   return (
     <div className="daily border rounded">
-      <img className="rounded" src={src} alt="" />
+      <img className="rounded" src={`.${src}`} alt={title} />
       <div className="p-2 d-flex flex-column justify-content-between">
 
         <div>
-            <small style={{ color: colors.gray_small }}>
-            Healthy, sweet, delicious
+            <small style={{ color: colors.gray_small }} className="text-capitalize">
+            {words}
             </small>
             <h6 className="mt-2" style={{ marginBottom: "0px" }}>{title}</h6>
             <p
-            className="mt-1"
+            className="mt-1 fw-bold text-uppercase"
             style={{ marginBottom: "0px", fontWeight: "500 !important" }}
             >
-            {price}
+            {price} da
             </p>
             <p style={{color : colors.gray_p}}>
                 {desc}
             </p>
             
         </div>
+           <div>
+            <button className="btn btn-dark rounded text-light w-100 d-flex align-items-center justify-content-center"><Add color={'white'}/> Bag</button>
            <button
             style={{
                 backgroundColor: colors.primary,
@@ -32,6 +34,7 @@ export default function Daily({src,price,desc,title}) {
             >
             <List color="white" /> Show Detail
             </button>
+           </div>
       </div>
     </div>
   );

@@ -1,141 +1,141 @@
 /* card */
 @media (min-width: 576px) {
-    .info-md {
-      font-size: 0.85rem !important; 
-    }
-    .title-md {
-        font-size: 1.03rem !important; 
-      }
-    .taille-md{
-        width: 40vw !important;
-        height: 45vh !important;
-    }
+  .info-md {
+    font-size: 0.85rem !important; 
   }
+  .title-md {
+      font-size: 1.03rem !important; 
+    }
+  .taille-md{
+      width: 40vw !important;
+      height: 45vh !important;
+  }
+}
 
 @media (min-width: 992px) {
-    .info-lg {
-      font-size: 0.95rem !important; 
-    }
-    .title-lg {
-        font-size: 1.2rem !important; 
-      }
-    .taille-lg{
-        width: 24vw !important;
-        height: 50vh !important;
-    }
+  .info-lg {
+    font-size: 0.95rem !important; 
   }
+  .title-lg {
+      font-size: 1.2rem !important; 
+    }
+  .taille-lg{
+      width: 24vw !important;
+      height: 50vh !important;
+  }
+}
 .borderH:hover{
-  border: 1px solid #85a26a !important;
+border: 1px solid #85a26a !important;
 }
 /* separation */
 .container-section {
-    padding: 20px;
-    background-color: #f8f9fa;  
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    padding: 3% 7% ;
-    margin: 20px auto; 
-    margin-top:  0 !important;
-  }
-  
-  .section-title {
-    font-size: 2rem;
-    color: #000000; 
-    margin-bottom: 10px; 
-  }
-  
-  .section-divider {
-    border: 1px solid rgb(133, 162, 106);
-    margin: 0 auto; 
-    width: 100%; 
-  }
+  padding: 20px;
+  background-color: #f8f9fa;  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  padding: 3% 7% ;
+  margin: 20px auto; 
+  margin-top:  0 !important;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #000000; 
+  margin-bottom: 10px; 
+}
+
+.section-divider {
+  border: 1px solid rgb(133, 162, 106);
+  margin: 0 auto; 
+  width: 100%; 
+}
 /* barre horizontalle */
 .image-container {
-    position: relative;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .background-image {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    padding: 20px;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-  }
-  
-  
-  .section-title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .section-description {
-    font-size: 1rem;
-    color: #6c757d;
-  }
+.background-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 20px;
+
+}
+
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.section-description {
+  font-size: 1rem;
+  color: #6c757d;
+}
 
 /* corp Categorie */
 
 .main-container {
-    display: flex;
-  }
-  
-.sidebar {
-    width: 20%;
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.brd-btm{
-  border-bottom: 1px solid #85a26a;
-}
-.brd-btm:hover{
-  border-bottom: 1px solid #000000;
-}
-li:hover{
-    cursor: pointer;
-}
-ul ul li:hover{
-  cursor: pointer;
-  letter-spacing: 0.5px;
-  color: #85a26a;
-}
-.input-search-cat{
-  outline: 0.5px solid #85a26a;
-}
-.input-search-cat:focus{
-  outline: 6px solid #85a26a;
-}
-.btn-search-cat{
-  color: #85a26a;
-  border: 1px solid #85a26a;
-}
-.btn-search-cat:hover{
-  color: #ffffff;
-  background-color: #85a26a;
-  border: 1px solid #ffffff;
-}
-.cntr{
-  align-self: center;
-  justify-content: center;
-}
-.content {
-    width: 80%;
-}
-@media (max-width: 768px) {
-    .content {
-        width: 100vw !important;
-      }
+  display: flex;
 }
 
-  
+.sidebar {
+  width: 20%;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.brd-btm{
+border-bottom: 1px solid #85a26a;
+}
+.brd-btm:hover{
+border-bottom: 1px solid #000000;
+}
+li:hover{
+  cursor: pointer;
+}
+ul ul li:hover{
+cursor: pointer;
+letter-spacing: 0.5px;
+color: #85a26a;
+}
+.input-search-cat{
+width: 100%;
+outline: 0.5px solid #85a26a;
+}
+.input-search-cat:focus{
+outline: 6px solid #85a26a;
+}
+.btn-search-cat{
+color: #85a26a;
+border: 1px solid #85a26a;
+}
+.btn-search-cat:hover{
+color: #ffffff;
+background-color: #85a26a;
+border: 1px solid #ffffff;
+}
+.cntr{
+align-self: center;
+justify-content: center;
+}
+.content-cat {
+  width: 80%;
+}
+@media (max-width: 768px) {
+  .content-cat {
+      width: 100vw !important;
+    }
+}
+
