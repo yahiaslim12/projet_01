@@ -81,6 +81,7 @@ export default function Header() {
         },4000)
      }
   }
+  
   useEffect(()=>{
     console.log(values);
   },[values])

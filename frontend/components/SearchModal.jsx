@@ -1,9 +1,19 @@
 'use client'
 import { Close } from "../svg/bag";
 import { colors, pallet } from "../styles/ele";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Search } from "@/app/api/products";
 export default function SearchModal({open,setOpen}) {
   const [count , setCount] = useState(0)
+  const [cards , setCards] = useState([])
+  const [value,setValue] = useState('')
+  const handleSearch = async() => {
+    const res = await Search(value)
+    setCards(res)
+  }
+  useEffect(()=>{
+    setCount(cards.length)
+  },[cards.length])
   return (
     <div className="searchModal">
         <div className="modalHead d-flex justify-content-between border-bottom py-3 px-2">
@@ -14,14 +24,25 @@ export default function SearchModal({open,setOpen}) {
             <Close state={open} setState={setOpen} type={"close"}/>
         </div>
         <div className="d-flex gap-3 mt-3">
-            <input className="search_input px-2 py-1 rounded w-100" type="text" name="" id="" placeholder="exp:Madlan"/>
-            <button className="rounded px-2 py-1" style={{color : 'white',backgroundColor : colors.primary}}>Search</button>
+            <input className="search_input px-2 py-1 rounded w-100" type="text" name="search" value={value} onChange={(e)=>setValue(e.target.value)} placeholder="exp:Madlan"/>
+            <button className="rounded px-2 py-1" onClick={()=>handleSearch()} style={{color : 'white',backgroundColor : colors.primary}}>Search</button>
         </div>
         <div className="mt-3 border-bottom pb-3">
             <small>Product number : <b>{count}</b></small>
         </div>
-        <div className="search_product">
-
+        <div className="container_of_cards" style={{overflowY : 'auto'}}>
+            {cards.map((item)=>(
+                <div key={item.id_product} className="search_product mt-2 d-flex justify-content-between px-2 py-1 align-items-center">
+                    <div className="d-flex gap-2 align-items-center">
+                        <img className="border rounded" src={`.${item.img}`} alt="" width={50}/>
+                        <div>
+                            <h6 style={{marginBottom : '0px'}}>{item.name}</h6>
+                            <small  style={{color : colors.gray_small ,fontSize : '12px'}}>{item.words}</small>
+                        </div>
+                    </div>
+                    <h6 className="fw-bold" style={{color : colors.primary,fontSize : '14px'}}>{item.price} DA</h6>
+            </div>
+            ))}
         </div>
     </div>
   )
