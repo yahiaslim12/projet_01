@@ -19,7 +19,7 @@ const CardComponent = ({product}) => {
   };
 
   return (
-    <Link style={{textDecoration:"none"}} href={"./product"}>
+    <Link style={{textDecoration:"none"}} href={"./"+product.id_product}>
     <Card style={{ width: '60vw' , height : "45vh" , borderRadius: '18px' , cursor :"pointer" }} className="pt-3 taille-md taille-lg mb-4 borderH">
         <Card.Title className='text-center align-content-center title-md title-lg ' style={{ backgroundColor :"#85a26a", marginTop :"-3.5vh", fontSize :'1rem' , height:"6.3%", marginLeft :"12%" , marginRight :"12%" , color: "#fff" ,borderRadius: '18px'}}>{product.name}</Card.Title>
         <Card.Img variant="top" src={"."+product.img} alt={'photo '+product.name} className="px-3" style={{ height: '55%' , objectFit :'cover' }} />

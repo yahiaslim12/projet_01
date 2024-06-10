@@ -111,7 +111,6 @@ export default function CorpCategorie() {
 
   const searchIfExist = async(e) => {
     const res = await searching(search)
-    console.log(res)
     setProducts(res.rows)
   }
 
@@ -247,7 +246,7 @@ export default function CorpCategorie() {
           <Col key={product.id_product} xs={12} md={6} lg={4} className="text-center d-flex justify-content-center mt-5">
             <CardComponent product={product} />
           </Col>
-        )) ): <Skeleton className='mx-3' style={{height :"25vh" , width:"100%"}}/>}
+        )) ): <Skeleton className='mx-3' style={{height :"60vh" , width:"100%"}}/>}
         </Row>
       </Container>
       <div className='d-flex justify-content-center align-items-center my-3'>
