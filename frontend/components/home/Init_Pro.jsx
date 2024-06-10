@@ -23,7 +23,7 @@ export default function Init_Pro() {
         <div className="cards d-flex gap-2 mt-3">
             <Pub/>
             {cards.map((item)=>(
-                <Daily key={item.id_product} words={item.words} desc={item.s_desc} title={item.name} price={item.price} src={item.img} />
+                <Daily key={item.id_product} id = {item.id_product} words={item.words} desc={item.s_desc} title={item.name} price={item.price} src={item.img} />
             ))}
         </div>
     </section>

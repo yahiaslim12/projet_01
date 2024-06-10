@@ -32,9 +32,20 @@ export async function Search(data) {
         const values = [`%${data}%`];
         const res = await sql.query(query, values);
         console.log(res);
-        return res.rows; // res.rows is already an array
+        return res.rows; 
     } catch (error) {
         console.log(error);
-        throw error; // Rethrow the error to handle it outside the function if necessary
+        throw error; 
+    }
+}
+export async function GET_PRO(id){
+    try {
+        const query = 'select * from product,ingredient where product.id_product = $1'
+        const res =await sql.query(query,[id])
+        console.log(res);
+        return res.rows
+    } catch (error) {
+        console.log(error);
+        throw error;
     }
 }

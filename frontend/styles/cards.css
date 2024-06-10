@@ -41,7 +41,9 @@
     width: 300px;
     height: 400px;
 }
-
+.ecard:hover{
+    cursor: pointer;
+}
 .ecard .one div{
     width: 100%;
 

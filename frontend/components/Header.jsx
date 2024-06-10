@@ -3,19 +3,18 @@ import { Modal ,Box, Drawer,Alert} from "@mui/material"
 import { ul ,button, link, pallet} from "../styles/ele"
 import {Bag,Close,List,Person, Search} from "../svg/bag"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import SearchModal from "./SearchModal"
 import { colors } from "../styles/ele"
 import Drawer_content from "./Drawer_content"
 import axios from "axios"
 import { create } from "@/app/api/createAccount"
 import { useRouter } from "next/navigation"
-
+import {signIn, signOut, useSession} from 'next-auth/react'
+import AuthContext from "./AuthProvider"
 export default function Header() {
   const [open,setOpen] = useState(false);
   const [drawer,setDrawer] = useState(false)
-  const [openL,setOpenL] = useState(false)
-  const [change,setChange] = useState(false)
   const [values,setValues] = useState({
      firstname : '',
      lastname : '',
@@ -24,11 +23,17 @@ export default function Header() {
      email : "",
      password : ""
   })
+  const [credentials,setCredentials] = useState({
+    email : '',
+    password : ''
+  })
   const [my_alert,setMy_alert] = useState({
     open : false,
     msg : '',
     backgroundColor: "",
   })
+  const { openL, change, handleChange, handleOpenL ,closeModalL ,openModalL} = useContext(AuthContext);
+  const {data: session,status} = useSession()
   const router = useRouter()
   const handleOpen = ()=>{
       setOpen(false)
@@ -36,25 +41,25 @@ export default function Header() {
   const closeDrawer = ()=>{
     setDrawer(false)
   }
-  const handleChange = (e) => {
-     e.preventDefault()
-     setChange(!change)
-  }
-  const handleCloseLoginModal = ()=>{
-    setOpenL(false)
-  }
+  
   const handleValues = (e) => {
     setValues(prev => ({
         ...prev,
         [e.target.name] : e.target.value
     }))
   }
+  const handleCredentials = (e)=>{
+     setCredentials(prev => ({
+        ...prev,
+        [e.target.name] : e.target.value
+     }))
+  }
   const createAccount = async(e) => {
      e.preventDefault()
      const res = await create(values)
      if(res && res.command) {
         console.log(res.command);
-        setOpenL(false)
+        closeModalL()
         router.push('./')
         setMy_alert(prev => ({
             open : true,
@@ -81,10 +86,54 @@ export default function Header() {
         },4000)
      }
   }
-  
-  useEffect(()=>{
-    console.log(values);
-  },[values])
+  const Login = async(e) => {
+     e.preventDefault()
+     console.log(credentials);
+     const res =await signIn('credentials' ,{
+        email : credentials.email,
+        password : credentials.password,
+        redirect : false
+     }).then((res)=>{
+        console.log(res);
+        if(res.status !== 200){
+            setMy_alert(prev =>({
+                open : true,
+                msg : 'Email or Password Incorrect',
+                backgroundColor : 'red'
+            }))
+            setTimeout(()=>{
+                setMy_alert(prev =>({
+                    ...prev,
+                    open : false,
+                }))
+            },4000)
+        }else{
+            router.push('./')
+            router.refresh()
+            setMy_alert(prev =>({
+                open : true,
+                msg : 'Connection succussfuly',
+                backgroundColor : '#85a26a'
+            }))
+            setTimeout(()=>{
+                setMy_alert(prev =>({
+                    ...prev,
+                    open : false,
+                }))
+            },4000)
+        }
+        closeModalL()
+        
+     }).catch(err =>{
+        console.log(err); 
+     })
+     
+  }
+  const Logout = ()=>{
+     signOut()
+     router.push('./')
+     router.refresh()
+  }
   return (
     <header className='border'>
         <div className='headerContainer container d-flex justify-content-between align-items-center'>
@@ -93,14 +142,25 @@ export default function Header() {
                 <ul style={ul} className="d-flex gap-4 align-items-center">
                     <li style={{color : colors.primary}}><Link href={'./'} style={link}>Home</Link></li>
                     <li><Link href={'/categories'} style={link}>Category</Link></li>
-                    <li><Link href={'./cart'} style={link}>Bag</Link></li>
+                    <li>
+                        {
+                            session ? (
+                                <Link href={'./cart'} style={link}>Bag</Link>
+                            ):(
+                                <button style={{backgroundColor : 'white',border : 'none'}} onClick={()=>openModalL()}>Bag</button>
+                            )
+                        }
+                    </li>
                     <li><Link href={'#about'} style={link}>About us</Link></li>
                 </ul>
             </nav>
            
             <div className="d-flex gap-3 align-items-center">
                 <button onClick={()=>setOpen(true)} className="btn btn-light d-flex align-items-center gap-2" style={button}><Search/> Search</button>
-                <button style={button} onClick={()=>setOpenL(true)} className="btn btn-light d-flex align-items-center gap-2"><Person/>Login</button>
+                <button style={button} onClick={()=>handleOpenL()} className="btn btn-light d-flex align-items-center gap-2">
+                    <Person/>
+                    {status === 'loading' ? 'Loading...' : session ? session.user.name : 'Login'}
+                </button>
                 <button className="btn d-md-none d-block" onClick={()=>setDrawer(true)}><List color={'black'}/></button>
             </div>
         </div>
@@ -112,17 +172,17 @@ export default function Header() {
         <Drawer anchor="left" open = {drawer} onClose={()=>setDrawer(false)}>
            <Drawer_content drawer = {closeDrawer}/>
         </Drawer>
-        <Modal open = {openL} onClose={()=>setOpenL(false)}>
+        <Modal open = {openL} onClose={()=>closeModalL()}>
             <Box className = "login_modal">
                 <div className="d-flex justify-content-between">
                     <div>
-                        <h5>{!change ? "Connect to your account" : "Create an account"}</h5>
-                        <p style={{color : colors.gray_small,fontSize : '14px'}}>{!change ? 'Enter your Email and password to connect to your account' : 'Enter your personal information to create an account'}</p>
+                        <h5>{!change ? "Connect to your account" : !session ? "Create an account" : session.user.name}</h5>
+                        <p style={{color : colors.gray_small,fontSize : '14px'}}>{!change ? 'Enter your Email and password to connect to your account' : !session ? 'Enter your personal information to create an account' : session.user.email}</p>
 
                     </div>
-                    <Close setState={handleCloseLoginModal} type={'close'}/>
+                    <Close setState={closeModalL} type={'close'}/>
                 </div>
-                <form action="" className="d-flex flex-column gap-1 mt-5">
+                <form action="" className="d-flex flex-column gap-1 mt-5" onSubmit={!change ? Login : createAccount}>
                     {!change ? (
                         <>
                         <div className="input-floating-label form-floating mb-4">
@@ -132,7 +192,8 @@ export default function Header() {
                                     className="form-control"
                                     id="floatingInput"
                                     placeholder="name@example.com"
-                                    val
+                                    value={credentials.email}
+                                    onChange={(e)=>handleCredentials(e)}
                                 />
                                 <label htmlFor="floatingInput">Email address</label>
                         </div>
@@ -143,13 +204,17 @@ export default function Header() {
                                 className="form-control"
                                 id="floatingInput"
                                 placeholder="password"
-        
+                                value={credentials.password}
+                                onChange={(e)=>handleCredentials(e)}
                             />
                             <label htmlFor="floatingInput">Password</label>
                         </div>
                         </>
                     ):(
+
                         <>
+                        {!session && (
+                           <>
                           <div className="d-flex gap-3 flex-wrap flex-sm-nowrap">
                             <div className="input-floating-label form-floating mb-4 w-100 w-sm-50">
                                     <input
@@ -226,15 +291,27 @@ export default function Header() {
                                 />
                                 <label htmlFor="floatingInput">Password</label>
                             </div>
+                            </>
+                        )
+                        
+                        }
                           
                         </>
 
                     )
                     }
-                    <button className="btn btn-dark text-light" onClick={(e)=> change ? createAccount(e) : ""}>{!change ? "Connect" : "Create"}</button>
-                    <small className="text-center">
-                        {!change ? "if you don't have account " : "if you have account "}
-                         <button onClick={(e)=>handleChange(e)} style={{color : colors.primary,backgroundColor : 'white',border : 'none'}}>{!change ? 'Create Account':'Login'}</button></small>
+                    {!session && <button className="btn btn-dark text-light" type="submit">{!change ? "Connect" : "Create"}</button>}
+                    {
+                        session && <button className="btn btn-danger text-light" onClick={()=>Logout()}>Logout</button>
+                    }
+                    {
+                        !session && (
+                            <small className="text-center">
+                            {!change ? "if you don't have account " : "if you have account "}
+                             <button onClick={(e)=>handleChange(e)} style={{color : colors.primary,backgroundColor : 'white',border : 'none'}}>{!change ? 'Create Account':'Login'}</button>
+                         </small>
+                        )
+                    }
                 </form>
             </Box>
         </Modal>

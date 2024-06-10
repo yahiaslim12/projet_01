@@ -18,6 +18,7 @@ export default function End() {
           {cards.map((item,i)=>(
              <Ecard 
              key={item.id_product} 
+             id={item.id_product}
              s_desc = {item.s_desc} 
              b_desc = {item.b_desc} 
              name = {item.name} 
