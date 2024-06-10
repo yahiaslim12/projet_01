@@ -21,8 +21,8 @@ export default function Ecard({id,name,price,s_desc,b_desc,img,category,shipping
 
   }
   return (
-    <div onClick={()=>toProduct(id)} className="ecard rounded border px-2 py-1 d-flex flex-column justify-content-between mt-3">
-        <div className="one d-flex flex-column gap-1 gap-sm-0">
+    <div className="ecard rounded border px-2 py-1 d-flex flex-column justify-content-between mt-3">
+        <div onClick={()=>toProduct(id)} className="one d-flex flex-column gap-1 gap-sm-0">
           <div>
            <img src={`.${img}`} alt={name} loading="lazy"/>
           </div>
