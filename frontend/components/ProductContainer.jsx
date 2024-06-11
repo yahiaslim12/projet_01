@@ -48,7 +48,6 @@ export default function ProductContainer({ id_produit }) {
  },[quantity, status ,id_produit , selectedOP1] )
 
   const addIt99 = async(e)=>{
-    console.log(values)
     const res = await addIt(values);
     const res2 = change ? await changeIt(values) : "no modification";
     if(res.rows===1 && res2.rows===1){
@@ -288,7 +287,7 @@ export default function ProductContainer({ id_produit }) {
       </div>
       {
             my_alert.open && (
-                <Alert variant="filled" className="my_alert" style={{backgroundColor : my_alert.backgroundColor}}>
+                <Alert variant="filled" className="my_alert" style={{position:"fixed" , zIndex :"10" , backgroundColor : my_alert.backgroundColor}}>
                     {my_alert.msg}
                 </Alert>
             )
