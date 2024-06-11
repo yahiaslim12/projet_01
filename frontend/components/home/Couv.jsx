@@ -5,6 +5,7 @@ import { colors } from "../../styles/ele"
 
 export default function Couv() {
   return (
+    
     <section className='couv container mt-3 d-flex align-items-center justify-content-center'>
          <div className='part_one'>
              <h1 style={{marginBottom : '0px'}} className="fw-bold">Welcome to TastrovalDZ 
@@ -18,7 +19,7 @@ export default function Couv() {
          </div>
          <div className='part_two d-flex justify-content-center align-items-center'>
              <div className="div_img">
-                <img src={'./photos/pastry_shop.jpg'} className="rounded" alt=""/>
+                <img src={'./photos/pastry_shop.jpg'} className="rounded" alt="home pic" />
                 <div className="glass w-50 rounded px-2 py-1 border">
                     <Rating value={5} readOnly/>
                     <p style={{marginBottom : '0px'}}>Choose your healthy pastry for good healthy</p>
@@ -39,5 +40,6 @@ export default function Couv() {
              </div>
          </div>
     </section>
+
   )
 }

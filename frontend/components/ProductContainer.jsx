@@ -1,18 +1,99 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useState , useContext } from 'react';
 import { Container, Row, Col  } from 'react-bootstrap';
 import { Cart } from '../svg/bag';
 import { getProduct } from '@/app/api/getProduct';
 import { getin } from '@/app/api/getin';
 import Skeleton from '@mui/material/Skeleton';
+import { useSession } from 'next-auth/react';
+import AuthContext from "./AuthProvider"
+import { addIt } from '@/app/api/setPanier';
+import { changeIt } from '@/app/api/setchange';
+import { Alert } from '@mui/material';
 
 export default function ProductContainer({ id_produit }) {
 
-  
   const [special, setSpecial] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState();
+  const [ingredient, setIngredient] = useState();
   const [ing, setIng] = useState();
+  const [selectedOP1, setSelectedOP1] = useState(null);
+  const [change, setChange] = useState();
+  const [my_alert,setMy_alert] = useState({
+    open : false,
+    msg : '',
+    backgroundColor: "",
+  })
+
+
+  const {data: session,status} = useSession()
+  const { openModalL} = useContext(AuthContext);
+  const [values,setValues] = useState({
+    id_produit : id_produit ,
+    email : session && session.user.email,
+    qte : quantity , 
+    ingredient : ingredient ,
+    in_qte : selectedOP1
+ })
+
+ useEffect(()=>{
+  setValues({
+    id_produit : id_produit ,
+    email : session && session.user.email,
+    qte : quantity , 
+    ingredient : ingredient ,
+    in_qte : selectedOP1
+  })
+ },[quantity, status ,id_produit , selectedOP1] )
+
+  const addIt99 = async(e)=>{
+    console.log(values)
+    const res = await addIt(values);
+    const res2 = change ? await changeIt(values) : "no modification";
+    if(res.rows===1 && res2.rows===1){
+      setMy_alert(prev => ({
+        open : true,
+        msg : 'Added to your bag'
+    }))
+    setTimeout(()=>{
+        setMy_alert(prev =>({
+            ...prev,
+            open : false,
+            backgroundColor : "#85a26a"
+        }))
+    },4000)
+    }else if(res.rows==1){
+        setMy_alert(prev => ({
+          open : true,
+          msg : 'Added with default paramas' , 
+          backgroundColor : "#85a26a"
+      }))
+      setTimeout(()=>{
+          setMy_alert(prev =>({
+              ...prev,
+              open : false,
+
+          }))
+      },4000)
+    }else {
+      setMy_alert(prev => ({
+        open : true,
+        msg : 'Already added',
+        backgroundColor : "red"
+    }))
+    setTimeout(()=>{
+        setMy_alert(prev =>({
+            ...prev,
+            open : false,
+        }))
+    },4000)
+    }
+  }
+  
+
+
+
 
   const incrementQuantity = () => {
     if (quantity < 99) {
@@ -48,11 +129,13 @@ export default function ProductContainer({ id_produit }) {
   };
 
 
-  const [selectedOP1, setSelectedOP1] = useState(null);
 
 
-  const handleSelection1 = (e) => {
-    setSelectedOP1(e);
+
+  const handleSelection1 = (a,b,c) => {
+    setSelectedOP1(b);
+    setIngredient(a);
+    setChange(c);
   };
 
   
@@ -85,20 +168,20 @@ export default function ProductContainer({ id_produit }) {
                       <Col xs={12} md={9}>
                         <div className="option-selector">
                           <div
-                            className={`option ${selectedOP1 === 'm' ? 'selected' : ''}`}
-                            onClick={() => handleSelection1('m')}
+                            className={`option ${selectedOP1 === (ingredient.qte * 0.5) ? 'selected' : ''}`}
+                            onClick={() => handleSelection1(ingredient.name_ingredient , (ingredient.qte * 0.5) , true)}
                           >
                             {ingredient.qte * 0.5}
                           </div>
                           <div
-                            className={`option ${selectedOP1 === 'l' ? 'selected' : ''}`}
-                            onClick={() => handleSelection1('l')}
+                            className={`option ${selectedOP1 === (ingredient.qte ) ? 'selected' : ''}`}
+                            onClick={() => handleSelection1(ingredient.name_ingredient , (ingredient.qte) , false)}
                           >
                             {ingredient.qte}
                           </div>
                           <div
-                            className={`option ${selectedOP1 === 'xl' ? 'selected' : ''}`}
-                            onClick={() => handleSelection1('xl')}
+                            className={`option ${selectedOP1 === (ingredient.qte * 1.25) ? 'selected' : ''}`}
+                            onClick={() => handleSelection1(ingredient.name_ingredient , (ingredient.qte * 1.25) , true)}
                           >
                             {ingredient.qte * 1.25}
                           </div>
@@ -157,7 +240,7 @@ export default function ProductContainer({ id_produit }) {
                           <span style={{fontWeight :"bold" }}>{product && Math.floor(product.price)} DA</span>
                         </p>
                       </div>
-                      <div className="add-to-cart d-flex gap-2" >
+                      <div className="add-to-cart d-flex gap-2" onClick={session ? ()=>{addIt99()}  :()=>openModalL()} >
                         <Cart/> add to cart
                       </div>
                     </div>
@@ -203,6 +286,13 @@ export default function ProductContainer({ id_produit }) {
           </Row>
         </Container>
       </div>
+      {
+            my_alert.open && (
+                <Alert variant="filled" className="my_alert" style={{backgroundColor : my_alert.backgroundColor}}>
+                    {my_alert.msg}
+                </Alert>
+            )
+        }
     </div>
     :
       <>

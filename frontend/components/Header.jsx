@@ -108,7 +108,6 @@ export default function Header() {
                 }))
             },4000)
         }else{
-            router.push('./')
             router.refresh()
             setMy_alert(prev =>({
                 open : true,
