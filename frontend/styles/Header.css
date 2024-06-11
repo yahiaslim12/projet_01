@@ -69,12 +69,23 @@ header .logo img{
     padding: 1rem 2rem;
     border-radius: 10px;
 }
+.commandModal{
+    width: 500px;
+    height: auto;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    padding: 1rem 2rem;
+    border-radius: 10px;
+}
 
 /*responsive*/
 @media screen and (max-width:400px){
 }
 @media screen and (max-width:500px){
-    .search_modal,.login_modal{
+    .search_modal,.login_modal,.commandModal{
         width: 100%;
         height: 100%;
         border-radius: 0px;

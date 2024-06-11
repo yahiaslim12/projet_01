@@ -3,130 +3,78 @@ import { Modal, Box } from "@mui/material";
 import { colors } from "../../styles/ele";
 import { Edit, Remove, Close } from "../../svg/bag";
 import Alert from "./Alert";
-import { useState } from "react";
-
-export default function Cards() {
-  const [cardModal, setCardModal] = useState({});
+import { useState ,useEffect} from "react";
+import { useSession } from "next-auth/react";
+import {GET_ING,UPDATE_ING} from "@/app/api/products";
+import { Change_QTE } from "@/app/api/products";
+export default function Cards({cards,get_Cards,handleChange,cardModal,handleCardModal,changeQte,delete_pro}) {
+  const {data: session,status} = useSession()
   const [open, setOpen] = useState(false);
-  const [cards, setCards] = useState([
-    {
-      id: 1,
-      src: './photos/products/mad2.jpg',
-      name: 'Madlan Chocolat',
-      qte: 250,
-      count : 1,
-      price: 1500
-    },
-    {
-      id: 2,
-      src: './photos/products/mad2.jpg',
-      name: 'Madlan Chocolat',
-      qte: 250,
-      count : 1,
-      price: 1500
-    },
-    {
-      id: 3,
-      src: './photos/products/mad2.jpg',
-      name: 'Madlan Chocolat',
-      qte: 250,
-      count : 1,
-      price: 1500
-    },
-    {
-      id: 4,
-      src: './photos/products/mad2.jpg',
-      name: 'Madlan Chocolat',
-      qte: 250,
-      count : 1,
-      price: 1500
-    },
-    {
-      id: 5,
-      src: './photos/products/mad2.jpg',
-      name: 'Madlan Chocolat',
-      qte: 250,
-      count : 1,
-      price: 1500
-    },
-  ]);
+  const [detail, setDetail] = useState([]);
+  const change =async (id,qte)=>{
+      await Change_QTE([qte,id,session.user.email])
+  }
 
-  const [detail, setDetail] = useState([
-    { name: 'Farine', qte: 350, change: false, modify: true },
-    { name: 'Sucre', qte: 210, change: false, modify: false },
-    { name: 'Chocolat', qte: 11, change: false, modify: true },
-    { name: 'Smid', qte: 44, change: false, modify: false },
-    { name: 'Anything', qte: 44, change: false, modify: true },
-    { name: 'Testing', qte: 44, change: false, modify: false },
-  ]);
 
-  const handleChange = (id, type,method) => {
-     if(method === 'modal'){
-        setCardModal(prev => ({
-            ...prev,
-            count : cardModal.count + 1
-        }))
-    }
-    setCards(prevCards =>
-        prevCards.map(card => {
-          if (card.id === id) {
-            if (type === '-' && card.qte > 1) {
-              return { ...card, count: card.count - 1 };
-            } else if (type === '+') {
-              return { ...card, count: card.count + 1 };
-            }
-          }
-          return card;
-        })
-      );
+  const handleModify = async (element, e) => {
+    const newQte = e.target.value;
+    console.log(newQte);
+    const { id_product, name_ingredient } = element;
+
+    setDetail(prev => 
+      prev.map(item => {
+        if (item === element) {
+          console.log(item);
+          return { ...item, qte: Number(newQte) };
+        }
+        return item;
+      })
+    );
+    console.log(detail);
+    await UPDATE_ING([session.user.email, id_product, name_ingredient, Number(newQte)]);
+    getIng(cardModal);
   };
 
-  const handleModify = (element, e) => {
-    if (element.modify) {
-      setDetail(prev =>
-        prev.map(x => {
-          if (x.name === element.name) {
-            if (e === 'open') {
-              return { ...x, change: true };
-            } else {
-              return { ...x, qte: e.target.value };
-            }
-          }
-          return x;
-        })
-      );
-    } else {
-      console.log('Cannot modify it');
-    }
-  };
-
-  const handleOpen = (item) => {
-    setCardModal(item);
+  const getIng = async(item) => {
+    const res = await GET_ING(item.id_product,session.user.email)
+    setDetail(res)
+  }
+  const handleOpen = async(item) => {
+    handleCardModal(item)
+    getIng(item)
     setOpen(true);
   };
   const handleClose = () => {
      setOpen(false)
   }
+  
+  useEffect(()=>{
+    get_Cards()
+  },[])
+  useEffect(()=>{
+     change(changeQte[0],changeQte[1])
+     get_Cards()
+  },[changeQte])
   return (
     <section className="cards">
       <Alert />
       <div style={{ height: cards.length <= 3 ? 'auto' : '400px', overflowY: 'auto' }}>
         {cards.map(card => (
-          <div key={card.id} className="border-top border-bottom d-flex justify-content-between align-items-center py-2">
+          <div key={card.id_product} className="border-top border-bottom d-flex justify-content-between align-items-center py-2">
             <div className="d-flex ">
-              <img width={80} src={card.src} alt="product_img" />
+              <img width={80} height={80} style={{objectFit : 'cover'}} src={`.${card.img}`} alt="product_img" />
               <div className="d-flex flex-column gap-1">
                 <h6 style={{ color: colors.dark_title, fontWeight: '500 !important' }}>{card.name}</h6>
-                <small style={{ color: colors.gray_small, fontWeight: '500 !important' }}>{card.qte}g</small>
-                <small className="d-flex align-items-center" style={{ color: colors.gray_small }}><Remove width={25} height={25} /> Remove</small>
+                <small style={{ color: colors.gray_small, fontWeight: '500 !important' }}>{card.words}</small>
+                <small className="d-flex align-items-center btn" style={{ color: colors.gray_small }} onClick={()=>delete_pro(card.id_product,session.user.email)}><Remove width={25} height={25} /> Remove</small>
               </div>
             </div>
             <div className="gap-2 d-none d-sm-flex">
-              <button onClick={() => handleChange(card.id, '-','normal')} className="btn border rounded">-</button>
+              <button onClick={() => handleChange(card.id_product, '-','normal')} className="btn border rounded">-</button>
               <span className="border p-2 rounded d-flex align-items-center justify-content-center">
-                <p>{card.count}</p>
+                <p>{card.qte}</p>
               </span>
-              <button onClick={() => handleChange(card.id, '+','normal')} className="btn border rounded">+</button>
+              <button onClick={() => handleChange(card.id_product, '+','normal')} className="btn border rounded">+</button>
             </div>
             <div className="d-flex gap-1 align-items-center">
               <h6 className="fw-bold" style={{ color: colors.dark_title }}>
@@ -143,10 +91,10 @@ export default function Cards() {
             <div className="title d-flex justify-content-between border-bottom py-3 px-2">
               <div>
                 <h3 style={{ marginBottom: '0px' }}>
-                  {cardModal ? `Produit ${cardModal.id}` : ''}
+                  {cardModal ? `Produit : ${cardModal.name}` : ''}
                 </h3>
                 <p style={{ marginBottom: '0px', color: colors.gray_p }}>
-                  {cardModal ? 'This paragraph is a description for this produit' : ''}
+                  {cardModal ? cardModal.s_desc : ''}
                 </p>
               </div>
               <Close state={open} setState={handleClose} type={"close"} />
@@ -165,13 +113,13 @@ export default function Cards() {
                 </h6>
               </div>
               <div className="tbody" style={{ height: '400px', overflowY: "auto" }}>
-                {detail.map((item, index) => (
-                  <div key={index} className="tr border-bottom d-flex justify-content-between py-2">
+                {detail.map((item) => (
+                  <div key={item.name_ingredient} className="tr border-bottom d-flex justify-content-between py-2">
                     <span className="px-3 d-flex justify-content-center align-items-center" style={{ color: colors.gray_p }}>
-                      <p className="text-center">{item.name}</p>
+                      <p className="text-center">{item.name_ingredient}</p>
                     </span>
                     <span className="px-3 d-flex justify-content-center align-items-center" style={{ color: colors.gray_p }}>
-                      {item.change ? (
+                      {item.modify ? (
                         <input
                           value={item.qte}
                           onChange={(e) => handleModify(item, e)}
@@ -180,7 +128,7 @@ export default function Cards() {
                           className="border rounded px-2 py-1"
                         />
                       ) : (
-                        <p className="text-center" onDoubleClick={() => handleModify(item, 'open')}>{item.qte} g</p>
+                        <p className="text-center" >{item.qte} g</p>
                       )}
                     </span>
                     <span className="px-3 d-flex justify-content-center align-items-center">
@@ -196,7 +144,7 @@ export default function Cards() {
                 <div className="gap-2 d-flex">
                   <button onClick={() => handleChange(cardModal.id, '-','modal')} className="btn border rounded">-</button>
                   <span className="border p-2 rounded d-flex align-items-center justify-content-center">
-                    <p>{cardModal && cardModal.count}</p>
+                    <p>{cardModal && cardModal.qte}</p>
                   </span>
                   <button onClick={() => handleChange(cardModal.id, '+','modal')} className="btn border rounded">+</button>
                 </div>

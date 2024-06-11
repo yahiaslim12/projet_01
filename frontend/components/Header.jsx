@@ -1,13 +1,12 @@
 'use client'
-import { Modal ,Box, Drawer,Alert} from "@mui/material"
-import { ul ,button, link, pallet} from "../styles/ele"
+import { Modal ,Box, Drawer,Alert,CircularProgress} from "@mui/material"
+import { ul ,button, link} from "../styles/ele"
 import {Bag,Close,List,Person, Search} from "../svg/bag"
 import Link from "next/link"
 import { useContext, useState } from "react"
 import SearchModal from "./SearchModal"
 import { colors } from "../styles/ele"
 import Drawer_content from "./Drawer_content"
-import axios from "axios"
 import { create } from "@/app/api/createAccount"
 import { useRouter } from "next/navigation"
 import {signIn, signOut, useSession} from 'next-auth/react'
@@ -129,9 +128,10 @@ export default function Header() {
      
   }
   const Logout = ()=>{
-     signOut()
-     router.push('./')
-     router.refresh()
+     signOut({
+        callbackUrl : '/'
+     })
+
   }
   return (
     <header className='border'>
@@ -158,7 +158,7 @@ export default function Header() {
                 <button onClick={()=>setOpen(true)} className="btn btn-light d-flex align-items-center gap-2" style={button}><Search/> Search</button>
                 <button style={button} onClick={()=>handleOpenL()} className="btn btn-light d-flex align-items-center gap-2">
                     <Person/>
-                    {status === 'loading' ? 'Loading...' : session ? session.user.name : 'Login'}
+                    {status === 'loading' ? <CircularProgress style={{width : '20px',height:'20px',color : 'black'}}/> : session ? session.user.name : 'Login'}
                 </button>
                 <button className="btn d-md-none d-block" onClick={()=>setDrawer(true)}><List color={'black'}/></button>
             </div>
