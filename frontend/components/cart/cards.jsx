@@ -51,6 +51,7 @@ export default function Cards({cards,get_Cards,handleChange,cardModal,handleCard
   useEffect(()=>{
     get_Cards()
   },[])
+  
   useEffect(()=>{
      change(changeQte[0],changeQte[1])
      get_Cards()

@@ -165,7 +165,7 @@ export default function Header() {
         </div>
         <Modal open={open} onClose={()=> setOpen(false)}>
             <Box className = "search_modal">
-                <SearchModal setOpen = {handleOpen}/>
+                <SearchModal handleOpen = {handleOpen}/>
             </Box>
         </Modal>
         <Drawer anchor="left" open = {drawer} onClose={()=>setDrawer(false)}>

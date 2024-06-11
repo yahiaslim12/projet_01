@@ -2,7 +2,7 @@
 import { Modal ,Box} from "@mui/material";
 import { colors } from "../../styles/ele";
 import { useState } from "react";
-export default function Payment({som,openC,closeOpenC,openOpenC,text,handleText,confirm_cmd}) {
+export default function Payment({som,openC,closeOpenC,openOpenC,text,handleText,confirm_cmd,count}) {
   
   return (
     <section className="payment border rounded p-4">
@@ -24,14 +24,30 @@ export default function Payment({som,openC,closeOpenC,openOpenC,text,handleText,
             <p style={{color : colors.gray_small,fontSize : '12px'}} className="mt-3">Terms & Conditions apply</p>
             <Modal open = {openC} onClose = {()=>closeOpenC()}>
                <Box className = 'commandModal'>
-                   <div className="border-bottom px-2 py-3">
-                      <h3>Command Confirmation</h3>
-                      <p>you should confirme or cancel your command</p>
-                   </div>
-                   <div className="d-flex gap-3 px-2 mt-3">
+                   {count === 0 ? (
+                      <>
+                        <div className="border-bottom px-2 py-3">
+                        <h5 className="text-center text-danger">You dont have any product in the bag!</h5>
+                     </div>
+                     <div className="d-flex justify-content-center">
+
+                      <button onClick={()=>closeOpenC()} className="mt-3 w-50 btn btn-danger rounded text-light">Close</button>
+                     </div>
+                      </>
+                   ): (
+                    <>
+                    <div className="border-bottom px-2 py-3">
+                        <h3>Command Confirmation</h3>
+                        <p>you should confirme or cancel your command</p>
+                    </div>
+                    <div className="d-flex gap-3 px-2 mt-3">
                      <button className="w-50 btn btn-danger text-light rounded" onClick={()=>closeOpenC()}>Cancel</button>
                      <button className="w-50 btn btn-dark text-light rounded" onClick={()=>confirm_cmd()}>Confirm</button>
                    </div>
+                    </>
+                   )
+                   }
+                   
                </Box>
             </Modal>
     </section>

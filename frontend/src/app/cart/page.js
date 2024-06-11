@@ -36,7 +36,7 @@ export default function Index() {
     if(method === 'modal'){
      if (type === '-') {
        setCardModal(prev => {
-         const newQte = prev.qte >= 1 ? prev.qte - 1 : 0;
+         const newQte = prev.qte >= 2 ? prev.qte - 1 : 1;
          setChangeQte([prev.id_product, newQte]);
          return {
            ...prev,
@@ -58,8 +58,8 @@ export default function Index() {
        prevCards.map(card => {
          if (card.id_product === id) {
            if (type === '-') {
-             setChangeQte([id,card.qte >= 1 ? card.qte - 1 : 0])
-             return { ...card, qte: card.qte >= 1 ? card.qte - 1 : 0};
+             setChangeQte([id,card.qte >= 2 ? card.qte - 1 : 1])
+             return { ...card, qte: card.qte >= 2 ? card.qte - 1 : 1};
            } else if (type === '+') {
              setChangeQte([id,card.qte + 1])
              return { ...card, qte: card.qte + 1 };
@@ -128,7 +128,7 @@ export default function Index() {
     <Head count = {count}/>
     <main className="bag_main container mt-5 d-flex ">
       <Cards cards={cards} get_Cards={get_Cards} handleChange={handleChange} cardModal={cardModal} handleCardModal = {handleCardModal} changeQte = {changeQte} delete_pro = {delete_pro}/>
-      <Payment som = {som} openC={openC} closeOpenC={closeOpenC} openOpenC = {openOpenC} text={text} handleText={handleText} confirm_cmd = {confirm_cmd}/>
+      <Payment som = {som} openC={openC} closeOpenC={closeOpenC} openOpenC = {openOpenC} text={text} handleText={handleText} confirm_cmd = {confirm_cmd} count={count}/>
     </main>
     </>
   )
