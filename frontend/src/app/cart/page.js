@@ -73,6 +73,7 @@ export default function Index() {
    closeOpenC()
    console.log(ids);
    const res = await insert([session.user.email,ids,text,som + 700])
+   console.log(res);
    get_Cards()
  }
  const delete_pro = async (id,email)=>{
