@@ -1,7 +1,18 @@
+'use client'
 import { colors } from "../../styles/ele";
 import { Bird, Valid } from "../../svg/bag";
-
+import GET from "@/app/api/getNbUsers";
+import { useEffect, useState } from "react";
 export default function About() {
+  const [count,setCount] = useState(0)
+  const getUsers = async()=>{
+      const res = await GET()
+      console.log(res);
+      setCount(res)
+  }
+  useEffect(()=>{
+    getUsers()
+  },[])
   return (
     <section className="about_part d-flex container mt-5 py-2 gap-3 flex-wrap flex-lg-nowrap" id="about">
         <div className="part_one d-flex flex-wrap flex-sm-nowrap gap-4 w-100 w-md-50">
@@ -16,11 +27,11 @@ export default function About() {
                             <p className="text-center" style={{marginBottom : '0px'}}>Years of experience</p>
                         </span>
                         <span className="w-50 rounded p-2 text-light" style={{backgroundColor : colors.primary}}>
-                            <h1 className="fw-bold text-center" style={{marginBottom : '0px'}}>1.2K</h1>
-                            <p style={{marginBottom : '0px'}} className="text-center">User is happy</p>
+                            <h1 className="fw-bold text-center" style={{marginBottom : '0px'}}>{count}</h1>
+                            <p style={{marginBottom : '0px'}} className="text-center">User registred in our web site</p>
                         </span>
                      </div>
-                     <img className="rounded" src={'./photos/products/gateau.jpg'} alt="" />
+                     <img className="rounded" src={'./photos/healthy_pro.jpg'} alt="" />
                 </div>
         </div>
         <div className="part_two w-100 w-md-50">
@@ -34,11 +45,11 @@ export default function About() {
                 </li>
                 <li className="d-flex gap-3 align-items-center mt-4">
                     <Valid color={colors.primary}/>
-                    The Best Pastry
+                    The Good Quality
                 </li>
                 <li className="d-flex gap-3 align-items-center mt-4">
                     <Valid color={colors.primary}/>
-                    The Best Pastry
+                    The Good healthy
                 </li>
             </ul>
             <button className="btn mt-5 btn-dark text-light">Show More</button>
